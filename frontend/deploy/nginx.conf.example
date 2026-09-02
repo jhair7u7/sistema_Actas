@@ -1,0 +1,37 @@
+# Ejemplo de referencia para servir el frontend compilado y mantener /api
+# en el mismo origen. Ajustar dominio, certificados y rutas al entorno real.
+
+server {
+    listen 443 ssl http2;
+    server_name actas.ejemplo.pe;
+
+    ssl_certificate     /etc/nginx/certs/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/privkey.pem;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        proxy_pass https://zerobap.bap.net.pe;
+        proxy_http_version 1.1;
+        proxy_ssl_server_name on;
+        proxy_ssl_name zerobap.bap.net.pe;
+
+        proxy_set_header Host zerobap.bap.net.pe;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Si el backend fija Domain=zerobap.bap.net.pe en la cookie,
+        # se reescribe al dominio público del frontend.
+        proxy_cookie_domain zerobap.bap.net.pe $host;
+
+        proxy_connect_timeout 30s;
+        proxy_read_timeout 30s;
+        proxy_send_timeout 30s;
+    }
+}

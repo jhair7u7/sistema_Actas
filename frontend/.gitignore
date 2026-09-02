@@ -1,0 +1,23 @@
+# Dependencias
+node_modules/
+
+# Compilados
+dist/
+build/
+
+# Variables de entorno
+.env
+.env.local
+.env.production
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db
