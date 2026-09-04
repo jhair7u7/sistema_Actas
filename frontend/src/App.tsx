@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import AppLayout from "./components/layout/AppLayout";
+import DashboardPage from "./pages/Dashboard/DashboardPage";
 import GestionActasPage from "./pages/GestionActas/GestionActasPage";
 import AdministracionPage from "./pages/Administracion/AdministracionPage";
 import { useAuth, type Permission } from "./auth/AuthContext";
@@ -41,8 +42,8 @@ function RequirePermission({
 
 function AuthorizedHome() {
   const { hasPermission } = useAuth();
+    if (hasPermission("administrar")) return <Navigate to="/dashboard" replace />;
   if (hasPermission("ver")) return <Navigate to="/gestion-actas" replace />;
-  if (hasPermission("administrar")) return <Navigate to="/administracion" replace />;
 
   return (
     <div className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-8 text-center">
@@ -73,6 +74,14 @@ function App() {
           </RequireAuth>
         }
       >
+        <Route
+          path="dashboard"
+          element={
+            <RequirePermission permission="administrar">
+              <DashboardPage />
+            </RequirePermission>
+          }
+        />
         <Route index element={<AuthorizedHome />} />
         <Route
           path="gestion-actas"

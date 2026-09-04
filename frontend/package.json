@@ -11,12 +11,14 @@
     "smoke:api": "node scripts/smoke-zero-bap.mjs"
   },
   "dependencies": {
+    "chart.js": "^4.5.1",
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.8",
     "lucide-react": "^0.533.0",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.2.108",
     "react": "^18.3.1",
+    "react-chartjs-2": "^5.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.1"
   },

@@ -15,6 +15,12 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
+    to: "/dashboard",
+    label: "Dashboard",
+    description: "Registra data en tiempo real",
+    permission: "administrar",
+  },
+  {
     to: "/gestion-actas",
     label: "Gestion de Actas",
     description: "Consulta y filtra las actas registradas",
